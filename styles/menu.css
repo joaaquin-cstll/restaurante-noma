@@ -1,0 +1,52 @@
+.tasting {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.tasting article {
+  padding: 32px;
+  background: var(--bg);
+  border: 1px solid var(--accent);
+}
+.price {
+  margin: 4px 0 16px;
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--accent);
+}
+.courses {
+  margin-bottom: 16px;
+  padding-left: 20px;
+  list-style: decimal;
+  font-size: 0.9rem;
+}
+.courses li::marker {
+  color: var(--accent);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+.chips li {
+  padding: 3px 14px;
+  border: 1px solid var(--line);
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  color: var(--soft);
+}
+
+.cols img.portrait {
+  aspect-ratio: 2 / 3;
+  max-width: 350px;
+  justify-self: center;
+}
+
+@media (max-width: 768px) {
+  .tasting {
+    grid-template-columns: 1fr;
+  }
+}

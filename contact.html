@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact | NOMA Restaurant</title>
+<meta name="description" content="Reserve a table at NOMA and find our address, access and policies.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="styles/contact.css">
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <a class="logo" href="index.html"><img src="img/logo-sin-fondo.jpg" alt="NOMA Restaurante, home"></a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="contact.html#reserve">Reserve</a>
+  </div>
+</header>
+<main>
+<section class="section" id="reserve">
+  <div class="container cols top">
+    <div>
+      <span class="eyebrow">Reservations</span>
+      <h1>Reserve your table</h1>
+      <p>Open Wednesday to Sunday. Lunch from 13:30 to 15:30 and dinner from 20:30 to 22:30.</p>
+      <img src="img/img1_contact.jpg" alt="Table set for two next to a sunlit window">
+    </div>
+    <form class="form" action="#" method="post">
+      <div><label for="date">Date</label><input type="date" id="date" name="date" required></div>
+      <div><label for="time">Time</label>
+        <select id="time" name="time" required>
+          <option>13:30</option><option>14:00</option><option>14:30</option><option>15:00</option><option>15:30</option>
+          <option>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option><option>22:30</option>
+        </select></div>
+      <div><label for="guests">Guests</label>
+        <select id="guests" name="guests" required>
+          <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option>
+        </select></div>
+      <div><label for="experience">Experience</label>
+        <select id="experience" name="experience">
+          <option>À la carte</option><option>Origin Menu (5 courses)</option><option>Market Menu (9 courses)</option><option>Chef's Table</option>
+        </select></div>
+      <div><label for="r-name">Name</label><input type="text" id="r-name" name="name" required></div>
+      <div><label for="r-email">Email</label><input type="email" id="r-email" name="email" required></div>
+      <div class="full"><label for="comments">Allergies or comments</label><textarea id="comments" name="comments"></textarea></div>
+      <button class="btn" type="submit">Reserve</button>
+    </form>
+  </div>
+</section>
+
+<section class="section band">
+  <div class="container">
+    <h2>Find us &amp; accessibility</h2>
+    <p>A quiet corner in central Madrid, a short walk from the metro.</p>
+    <div class="cols top">
+      <div>
+        <img class="map" src="img/mapa_contact.jpg" alt="Map of central Madrid with NOMA marked on Calle del Olivo">
+        <p class="small">Calle del Olivo, 18 · 28004 Madrid</p>
+      </div>
+      <div>
+        <h3>Access information</h3>
+        <ul class="list">
+          <li><strong>Entrance &amp; step-free access</strong><span>Step-free entrance on Calle del Olivo; 90 cm clear doorway.</span></li>
+          <li><strong>Accessible facilities</strong><span>Accessible ground-floor restroom and wheelchair-friendly seating.</span></li>
+          <li><strong>Arrival &amp; nearby transport</strong><span>Metro 5 minutes away on foot; public parking a 3-minute walk away.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container cols top">
+    <div>
+      <span class="eyebrow">Contact</span>
+      <h2>Get in touch</h2>
+      <address>
+        Calle del Olivo, 18 · 28004 Madrid<br>
+        <a href="tel:+34910000000">+34 910 000 000</a><br>
+        <a href="mailto:hola@noma-restaurante.es">hola@noma-restaurante.es</a>
+      </address>
+      <p class="small">Address to be confirmed.</p>
+    </div>
+    <form class="form" action="#" method="post">
+      <div><label for="c-name">Name</label><input type="text" id="c-name" name="name" required></div>
+      <div><label for="c-email">Email</label><input type="email" id="c-email" name="email" required></div>
+      <div class="full"><label for="subject">Subject</label>
+        <select id="subject" name="subject"><option>General enquiry</option><option>Private dining</option><option>Groups and events</option><option>Press</option></select></div>
+      <div class="full"><label for="message">Message</label><textarea id="message" name="message" required></textarea></div>
+      <button class="btn" type="submit">Send</button>
+    </form>
+  </div>
+</section>
+
+<section class="section band">
+  <div class="container">
+    <h2>Restaurant policies</h2>
+    <details><summary>Reservations and cancellations</summary><p>Free cancellation up to 48 hours in advance. After that, a €30 fee per guest applies to tasting menus. We hold your table for 15 minutes.</p></details>
+    <details><summary>Allergies and intolerances</summary><p>Tell us when booking. We adapt menus with 48 hours' notice; we cannot guarantee the absence of allergen traces.</p></details>
+    <details><summary>Children and pets</summary><p>Children are welcome; high chairs are available. Small dogs are welcome on the terrace.</p></details>
+    <details><summary>Groups and events</summary><p>For groups of more than 7, please contact us directly to arrange a set menu.</p></details>
+    <details><summary>Privacy</summary><p>We use your data only to manage your booking or enquiry, in accordance with the GDPR. To exercise your rights, email <a href="mailto:hola@noma-restaurante.es">hola@noma-restaurante.es</a>.</p></details>
+  </div>
+</section>
+</main>
+<footer class="footer">
+  <div class="container">
+    <a class="logo" href="index.html"><img src="img/logo-sin-fondo.jpg" alt="NOMA Restaurante, home"></a>
+    <p>&copy; 2026 NOMA Restaurant | All rights reserved | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    <ul>
+      <li><a href="#"><img src="img/img_facebook.jpg" alt="Facebook"></a></li>
+      <li><a href="#"><img src="img/img_instragram.jpg" alt="Instagram"></a></li>
+      <li><a href="#"><img src="img/img_x.jpg" alt="X"></a></li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>
