@@ -214,7 +214,6 @@ h3 {
 .logo img {
   height: var(--logo-h);
   width: auto;
-  mix-blend-mode: multiply;
 }
 
 /* logo y botón encima del panel*/
@@ -224,15 +223,10 @@ h3 {
   z-index: 9;
 }
 
-/*
-  NAVEGACIÓN PRINCIPAL
-  Los dobles dos puntos (::before y ::after) crean pseudoelementos:
-  contenido visual generado por CSS, sin añadir etiquetas al HTML.
-  data-replace es un atributo HTML cuyo texto se lee desde CSS con attr().
-*/
+/*NAVEGACIÓN PRINCIPAL*/
 .primary-nav__list {
   display: flex;
-  gap: clamp(1rem, 3vw, 2rem); /* separación entre enlaces de la nav: de 16 px a 32 px */
+  gap: clamp(1rem, 3vw, 2rem);
 }
 
 .primary-nav__list li {
@@ -271,7 +265,7 @@ h3 {
   transition: transform 0.3s ease-in-out;
 }
 
-/* el mismo texto, en color acento, esperando fuera a la derecha (data-replace) */
+/* texto color acento esperando fuera a la derecha*/
 .nav-link::after {
   content: attr(data-replace);
   position: absolute;
@@ -300,7 +294,7 @@ h3 {
   transform: translateX(-200%);
 }
 
-/* la página activa ya lleva su propia línea (.nav-line) */
+/* página activa con linea*/
 .nav-link[aria-current]::before {
   display: none;
 }
