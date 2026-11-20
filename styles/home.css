@@ -1,12 +1,12 @@
 .stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: var(--gap-s);
   text-align: center;
 }
 .stats strong {
   display: block;
-  font-size: 3rem;
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 3rem);
   font-weight: 300;
   line-height: 1.1;
   color: var(--accent);
@@ -27,8 +27,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  padding: 20px;
+  gap: var(--gap-s);
+  padding: clamp(1rem, 2vw, 1.25rem); /* relleno de la tarjeta de premio: de 16 px a 20 px */
   border: 1px solid var(--line);
 }
 .award h3 {
@@ -46,22 +46,67 @@
   color: var(--accent);
 }
 
+/* Tablet */
+@media (max-width: 1024px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 32px;
+  }
+}
+
+/* ---------- EXPERIENCIAS: carrusel solo con CSS (radios + labels, como el slider) ---------- */
+.carousel {
+  --cards: 2; /* cards visibles a la vez */
+  --carousel-gap: 24px;
+  --step: calc((100% + var(--carousel-gap)) / var(--cards)); /* lo que se desplaza cada paso */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: clamp(1.25rem, 4vw, 2rem); /* espacio sobre el carrusel: de 20 px a 32 px */
+}
+/* los radios se ocultan visualmente pero siguen siendo accesibles con teclado */
+.carousel > input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.carousel__stage {
+  position: relative;
+  width: 100%;
+}
+.carousel__viewport {
+  overflow: hidden;
+}
+.carousel__track {
+  display: flex;
+  gap: var(--carousel-gap);
+  transition: transform 0.5s ease;
+}
+.carousel__slide {
+  flex: 0 0 calc((100% - (var(--cards) - 1) * var(--carousel-gap)) / var(--cards));
+}
+
+/* Card de experiencia: foto completa y texto que se despliega al pasar el ratón */
 .experience {
   position: relative;
   margin: 0;
+  overflow: hidden;
+  background: var(--surface);
 }
 .experience img {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+  height: auto;
 }
 .experience figcaption {
   position: absolute;
-  left: 0;
   right: 0;
   bottom: 0;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.5);
+  left: 0;
+  padding: clamp(0.75rem, 2vw, 1rem); /* relleno del figcaption sobre la foto: de 12 px a 16 px */
+  background: rgba(0, 0, 0, 0.55);
   color: #fff;
   font-size: 0.8rem;
 }
@@ -69,10 +114,109 @@
   display: block;
   font-size: 1rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.experience figcaption p {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease, margin 0.5s ease;
+}
+.experience:hover figcaption p {
+  max-height: 10rem;
+  margin-top: 0.4rem;
+  opacity: 1;
+}
+/* en pantallas táctiles no hay hover: el texto se muestra siempre */
+@media (hover: none) {
+  .experience figcaption p {
+    max-height: none;
+    margin-top: 0.4rem;
+    opacity: 1;
+  }
 }
 
-@media (max-width: 768px) {
-  .stats {
-    grid-template-columns: 1fr 1fr;
+/* Control del slider: selectores planos, sin anidar */
+#s1:checked ~ .carousel__stage .carousel__track {
+  transform: translateX(0);
+}
+#s2:checked ~ .carousel__stage .carousel__track,
+#s3:checked ~ .carousel__stage .carousel__track {
+  transform: translateX(calc(-1 * var(--step)));
+}
+
+/* Flechas (todas ocultas de partida; se muestran según el estado) */
+.arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 1.1rem;
+  line-height: 44px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+.arrow:hover {
+  background: var(--accent);
+  color: var(--text);
+  transform: translateY(-50%) scale(1.1);
+}
+.prev {
+  left: 0.75rem;
+}
+.next {
+  right: 0.75rem;
+}
+#s1:checked ~ .carousel__stage .n1,
+#s2:checked ~ .carousel__stage .p2 {
+  display: block;
+}
+
+/* Puntos */
+.carousel__dots {
+  display: flex;
+  gap: 14px;
+}
+.carousel__dots label {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--line);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.carousel__dots label[for="s3"] {
+  display: none; /* en escritorio solo hay 2 posiciones */
+}
+#s1:checked ~ .carousel__dots label[for="s1"],
+#s2:checked ~ .carousel__dots label[for="s2"],
+#s3:checked ~ .carousel__dots label[for="s3"] {
+  background: var(--accent-dark);
+  transform: scale(1.2);
+}
+/* Móvil: una card cada vez, tres posiciones */
+@media (max-width: 640px) {
+  .carousel {
+    --cards: 1;
+  }
+  #s3:checked ~ .carousel__stage .carousel__track {
+    transform: translateX(calc(-2 * var(--step)));
+  }
+  #s2:checked ~ .carousel__stage .n2,
+  #s3:checked ~ .carousel__stage .p3 {
+    display: block;
+  }
+  .carousel__dots label[for="s3"] {
+    display: block;
   }
 }

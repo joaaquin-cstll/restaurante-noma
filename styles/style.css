@@ -1,4 +1,7 @@
-/* estilos generales */
+/*
+  Definición de colores, tamaños y estilos que comparten todas las páginas
+*/
+
 :root {
   --bg: #fbfaf7;
   --surface: #f1ebdf;
@@ -6,6 +9,14 @@
   --soft: #7a7870;
   --line: #ddd5c4;
   --accent: #b9a68a;
+  --accent-dark: #8f7b5c;
+
+  --pad: clamp(1rem, 4vw, 1.5rem);       /* relleno latera l*/
+  --gap: clamp(1.5rem, 5vw, 3rem);       /* separación entre columnas principales*/
+  --gap-s: clamp(0.75rem, 2vw, 1.25rem); /* separación pequeña para cards, awards*/
+  --section-y: clamp(3rem, 8vw, 4.5rem); /* padding vertical de cada sección */
+  --logo-h: clamp(2.75rem, 6vw, 3.5rem); /* altura del logo en cabecera*/
+  --header-h: calc(var(--logo-h) + 24px); /* altura total de la cabecera logo + 24 px fijos de padding vertical */
 }
 
 * {
@@ -14,9 +25,17 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
+  overflow-x: clip;
   font-family: "Montserrat", sans-serif;
+  font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1rem);
   line-height: 1.7;
   color: var(--text);
   background: var(--bg);
@@ -26,15 +45,18 @@ img {
   display: block;
   max-width: 100%;
 }
+
 a {
   color: inherit;
 }
+
 ul,
 ol {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
 p {
   margin: 0 0 1rem;
 }
@@ -46,36 +68,46 @@ h3 {
   line-height: 1.2;
   margin: 0 0 1rem;
 }
+
 h1 {
-  font-size: 3rem;
+  font-size: clamp(2rem, 1.4rem + 3vw, 3rem);
   letter-spacing: 0.02em;
 }
+
 h2 {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+
 h3 {
-  font-size: 1.4rem;
+  font-size: clamp(1.15rem, 1rem + 0.8vw, 1.4rem);
 }
 
-/* Estructura */
+/*
+  en .container centrar el contenido y limitar su anchura máxima.
+  en .section aplica el mismo espacio vertical a las secciones de todas las páginas.
+*/
 .container {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--pad);
 }
+
 .section {
-  padding: 72px 0;
+  padding: var(--section-y) 0;
 }
+
 .band {
   background: var(--surface);
 }
+
 .center {
   text-align: center;
 }
+
 .btn-wrap {
-  margin-top: 32px;
+  margin-top: clamp(1.25rem, 4vw, 2rem); /*espacio sobre el botón CTA*/
   text-align: center;
 }
 
@@ -88,18 +120,23 @@ h3 {
   text-transform: uppercase;
   color: var(--soft);
 }
+
 .lead {
-  font-size: 1.2rem;
+  font-size: clamp(1.05rem, 1rem + 0.4vw, 1.2rem);
 }
+
 .small {
   font-size: 0.8rem;
   color: var(--soft);
 }
 
-/* Botones */
+/*BOTONES*/
 .btn {
+  position: relative;
+  isolation: isolate; /*controla qué quede delante y detrás*/
+  overflow: hidden;
   display: inline-block;
-  padding: 12px 26px;
+  padding: clamp(0.625rem, 1.5vw, 0.75rem) clamp(1.125rem, 3vw, 1.625rem);
   background: var(--text);
   color: var(--bg);
   border: 1px solid var(--text);
@@ -110,14 +147,45 @@ h3 {
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
+
+/*::before crea una capa decorativa
+  La capa empieza desplazada hacia abajo translateY(101%) al pasar
+  el ratón sube hasta cubrir el botón.*/
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent);
+  transform: translateY(101%);
+  transition: transform 0.3s ease-in-out;
+}
+
 .btn:hover {
-  opacity: 0.85;
+  color: var(--text);
+  border-color: var(--accent);
 }
+
+.btn:hover::before {
+  transform: translateY(0);
+}
+
 .btn-outline {
   background: transparent;
   color: var(--text);
 }
+
+.btn-outline::before {
+  background: var(--text);
+}
+
+.btn-outline:hover {
+  color: var(--bg);
+  border-color: var(--text);
+}
+
 .btn-row {
   display: flex;
   flex-wrap: wrap;
@@ -133,73 +201,199 @@ h3 {
   background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
+
 .header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--gap-s);
   padding-top: 12px;
   padding-bottom: 12px;
 }
+
 .logo img {
-  height: 56px;
+  height: var(--logo-h);
   width: auto;
   mix-blend-mode: multiply;
 }
-.header ul {
-  display: flex;
-  gap: 32px;
+
+/* logo y botón encima del panel*/
+.header .logo,
+.header .btn {
+  position: relative;
+  z-index: 9;
 }
-.header nav a {
-  padding-bottom: 4px;
-  border-bottom: 2px solid transparent;
-  font-size: 0.75rem;
+
+/*
+  NAVEGACIÓN PRINCIPAL
+  Los dobles dos puntos (::before y ::after) crean pseudoelementos:
+  contenido visual generado por CSS, sin añadir etiquetas al HTML.
+  data-replace es un atributo HTML cuyo texto se lee desde CSS con attr().
+*/
+.primary-nav__list {
+  display: flex;
+  gap: clamp(1rem, 3vw, 2rem); /* separación entre enlaces de la nav: de 16 px a 32 px */
+}
+
+.primary-nav__list li {
+  position: relative;
+}
+
+.nav-link {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  /* necesario para la animación de cambio de texto */
+  padding-block: 0.3rem 0.4rem;
+  font-size: clamp(0.7rem, 0.65rem + 0.2vw, 0.75rem);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
-}
-.header nav a:hover,
-.header nav a[aria-current] {
-  border-bottom-color: var(--accent);
+  white-space: nowrap;
 }
 
-/* Rejillas */
+.nav-link span {
+  display: inline-block;
+  transition: transform 0.4s ease-in-out;
+}
+
+/* subrayado que crece desde la izquierda */
+.nav-link::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* el mismo texto, en color acento, esperando fuera a la derecha (data-replace) */
+.nav-link::after {
+  content: attr(data-replace);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-block: 0.3rem 0.4rem;
+  color: var(--accent-dark);
+  transform: translateX(200%);
+  transition: transform 0.4s ease-in-out;
+}
+
+.nav-link:hover::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.nav-link:hover::after {
+  transform: translateX(0);
+}
+
+.nav-link:hover span {
+  transform: translateX(-200%);
+}
+
+/* la página activa ya lleva su propia línea (.nav-line) */
+.nav-link[aria-current]::before {
+  display: none;
+}
+
+.primary-nav__meta {
+  display: none;
+}
+
+/*
+  La línea de la página activa usa View Transitions API: el navegador puede
+  animar el mismo elemento entre documentos si conserva el mismo nombre.
+  view-transition-name identifica esa pieza visual entre páginas.
+  Línea de la página activa: al cambiar de página se desliza a la nueva opción
+   (View Transitions API: mismo nombre en ambas páginas = transición entre posiciones) */
+.nav-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  view-transition-name: nav-line;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(nav-line) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.2s;
+}
+
+/* ---------- MENÚ HAMBURGUESA (solo visible en móvil) ---------- */
+/* El botón y la capa oscura solo aparecen en tamaños de móvil */
+.burger,
+.menu-backdrop {
+  display: none;
+}
+
+/*
+  REJILLAS
+  display:grid organiza elementos en filas y columnas.
+  1fr significa una fracción del espacio disponible; dos columnas 1fr 1fr
+  reparten el ancho restante en dos partes iguales.
+*/
 .cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  gap: var(--gap);
   align-items: center;
 }
+
 .cols.top {
   align-items: start;
 }
+
 .cols img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  height: auto;
+  /* la foto se ve entera, con su proporción original */
 }
+
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: var(--gap-s);
 }
 
 /* Tarjetas */
 .card {
   border: 1px solid var(--line);
 }
+
 .card img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  height: auto;
 }
+
 .card-body {
-  padding: 20px;
+  padding: clamp(1rem, 2vw, 1.25rem); /* relleno interior de la tarjeta: de 16 px a 20 px */
 }
+
 .card h3 {
   margin: 0.25rem 0 0.5rem;
-  font-size: 1.2rem;
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.2rem);
 }
+
 .card p {
   margin: 0;
   font-size: 0.9rem;
@@ -211,92 +405,317 @@ h3 {
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
 }
+
 .list strong {
   display: block;
   font-weight: 500;
 }
+
 .list span {
   font-size: 0.9rem;
   color: var(--soft);
 }
 
-/* Galería */
+/*
+  GALERÍA
+  counter-reset y counter-increment crean una numeración automática con CSS.
+  object-fit:contain muestra la imagen entera, aunque puedan quedar huecos;
+  cover llenaría el recuadro, pero podría recortar parte de la fotografía.
+  Galería: las fotos se ven COMPLETAS (object-fit: contain, sin filas de altura fija).
+   Las filas se adaptan a la proporción de cada foto. */
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 220px;
-  gap: 16px;
-  margin-top: 32px;
+  gap: clamp(0.5rem, 1.6vw, 1rem);       /* separación entre fotos de la galería: de 8 px a 16 px */
+  margin-top: clamp(1.25rem, 4vw, 2rem); /* espacio sobre la galería: de 20 px a 32 px */
+  counter-reset: photo;
 }
+
 .gallery figure {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
+  overflow: hidden;
+  background: var(--surface);
+  counter-increment: photo;
 }
+
 .gallery img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
+
+/* número de la foto, en un círculo translúcido */
+.gallery figure::before {
+  content: "0" counter(photo);
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: rgba(251, 250, 247, 0.75);
+  backdrop-filter: blur(6px);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+
+/* pie de foto: sube desde abajo al pasar el ratón o enfocar */
+.gallery figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.8rem 1rem;
+  background: rgba(74, 74, 70, 0.82);
+  color: #fff;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transform: translateY(101%);
+  transition: transform 0.4s ease-in-out;
+}
+
+.gallery figure:hover figcaption {
+  transform: translateY(0);
+}
+
 .gallery .tall {
   grid-row: span 2;
 }
 
-/* Pie */
+/*
+  PIE DE PÁGINA
+  Las reglas anidadas dentro de .footer usan CSS nesting: son una forma
+  abreviada de escribir selectores como .footer .container o .footer p.
+*/
 .footer {
   padding: 24px 0;
   border-top: 1px solid var(--line);
-}
-.footer .container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-.footer .logo img {
-  height: 48px;
-}
-.footer p {
-  margin: 0;
-  font-size: 0.8rem;
-  color: var(--soft);
-}
-.footer ul {
-  display: flex;
-  gap: 16px;
-}
-.footer ul img {
-  width: 24px;
-  height: 24px;
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .logo img {
+    height: 48px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--soft);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    display: flex;
+    gap: 16px;
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
 }
 
-/* Móvil */
+/*
+  DISEÑO RESPONSIVE
+  Las media queries aplican cambios solo cuando la ventana cumple una condición.
+  Se parte de escritorio y se reorganizan columnas y navegación en pantallas
+  más estrechas. No son páginas distintas: es el mismo HTML adaptado.
+*/
+
+/* ---------- TABLET (hasta 1024px) ---------- */
+@media (max-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* si queda una tarjeta sola en la última fila, ocupa todo el ancho */
+  .cards> :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- MENÚ HAMBURGUESA (hasta 768px) ---------- */
+/*
+  El menú móvil funciona sin JavaScript gracias a :target.
+  :target selecciona el elemento cuyo id coincide con el fragmento de la URL
+  (por ejemplo, #primary-navigation). Al pulsar el enlace hamburguesa cambia
+  ese fragmento y el menú pasa a estar visible.
+  Funciona sin JavaScript con :target, igual que el ejercicio de diseño web:
+   - #primary-navigation:target = menú abierto
+   - #cerrar (no existe) cambia el :target y lo cierra */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
+  .header .container {
+    flex-wrap: nowrap;
   }
-  h2 {
-    font-size: 1.5rem;
+
+  .header .btn {
+    margin-left: auto;
   }
-  .section {
-    padding: 48px 0;
+
+  /* El nav pasa a ser un panel bajo la cabecera, cerrado por defecto */
+  .primary-nav {
+    position: fixed;
+    /* no se mueve al hacer scroll */
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+
+    /* animación de abrir y cerrar */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
   }
+
+  /* menú abierto */
+  .primary-nav:target {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+  }
+
+  .primary-nav__list {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .primary-nav__list li {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .primary-nav__list li:last-child {
+    border-bottom: 0;
+  }
+
+  .nav-link {
+    overflow: visible;
+    padding: 1rem var(--pad);
+    font-size: 0.85rem;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link::before,
+  .nav-link::after,
+  .nav-line {
+    display: none;
+  }
+
+  .nav-link span,
+  .nav-link:hover span {
+    transform: none;
+  }
+
+  .nav-link:hover,
+  .nav-link[aria-current] {
+    color: var(--accent-dark);
+  }
+
+  /* Botón hamburguesa */
+  .burger {
+    position: relative;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  /* las tres líneas */
+  .burger-open {
+    display: block;
+    background:
+      linear-gradient(var(--text), var(--text)) center 32% / 26px 2px no-repeat,
+      linear-gradient(var(--text), var(--text)) center 50% / 26px 2px no-repeat,
+      linear-gradient(var(--text), var(--text)) center 68% / 26px 2px no-repeat;
+  }
+
+  /* cada pseudoelemento es una línea; se cruzan para formar la X */
+  .burger-close::before,
+  .burger-close::after {
+    content: "";
+    position: absolute;
+    left: 9px;
+    right: 9px;
+    top: 50%;
+    height: 2px;
+    margin-top: -1px;
+    background: var(--text);
+    border-radius: 99px;
+  }
+
+  .burger-close::before {
+    transform: rotate(45deg);
+  }
+
+  .burger-close::after {
+    transform: rotate(-45deg);
+  }
+
+  /* fondo semitransparente cuando el menú está abierto */
+  .menu-backdrop {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: rgba(74, 74, 70, 0.55);
+  }
+
+  /* qué aparece y qué desaparece al abrir (hermanos posteriores del nav) */
+  .primary-nav:target~.burger-open {
+    display: none;
+  }
+
+  .primary-nav:target~.burger-close {
+    display: block;
+  }
+
+  .primary-nav:target~.menu-backdrop {
+    display: block;
+  }
+}
+
+
+/* ---------- MÓVIL (hasta 640px) ---------- */
+@media (max-width: 640px) {
+
   .cols,
   .cards {
     grid-template-columns: 1fr;
-    gap: 24px;
   }
-  .header .container {
-    flex-wrap: wrap;
+
+  .cards> :last-child:nth-child(odd) {
+    grid-column: auto;
   }
-  .header nav {
-    order: 3;
-    width: 100%;
-  }
-  .header ul {
-    justify-content: space-between;
-    gap: 8px;
-  }
+
   .gallery {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer .container {
+    flex-direction: column;
+    text-align: center;
   }
 }

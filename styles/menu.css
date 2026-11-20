@@ -1,16 +1,16 @@
 .tasting {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  gap: var(--gap);
 }
 .tasting article {
-  padding: 32px;
+  padding: clamp(1.25rem, 3vw, 2rem); /* relleno de cada artículo de menú degustación: de 20 px a 32 px */
   background: var(--bg);
   border: 1px solid var(--accent);
 }
 .price {
   margin: 4px 0 16px;
-  font-size: 3rem;
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 3rem);
   font-weight: 300;
   line-height: 1.1;
   color: var(--accent);
@@ -40,8 +40,7 @@
 }
 
 .cols img.portrait {
-  aspect-ratio: 2 / 3;
-  max-width: 350px;
+  width: min(100%, 350px);
   justify-self: center;
 }
 

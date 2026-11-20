@@ -13,18 +13,25 @@
 <header class="header">
   <div class="container">
     <a class="logo" href="index.html"><img src="img/logo-sin-fondo.jpg" alt="NOMA Restaurante, home"></a>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="team.html" aria-current="page">Team</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="contact.html">Contact</a></li>
+    <nav class="primary-nav" id="primary-navigation" aria-label="Primary">
+      <ul class="primary-nav__list">
+        <li><a href="index.html" class="nav-link" data-replace="Home"><span>Home</span></a></li>
+        <li><a href="team.html" class="nav-link" data-replace="Team" aria-current="page"><span>Team</span></a><span class="nav-line"></span></li>
+        <li><a href="menu.html" class="nav-link" data-replace="Menu"><span>Menu</span></a></li>
+        <li><a href="contact.html" class="nav-link" data-replace="Contact"><span>Contact</span></a></li>
       </ul>
+      <p class="primary-nav__meta">Cuisine of origin · Madrid</p>
     </nav>
     <a class="btn" href="contact.html#reserve">Reserve</a>
+    <!-- Menú hamburguesa sin JavaScript (mismo sistema que el ejercicio de diseño web):
+         "#primary-navigation" es el estado abierto (:target) y "#cerrar" no existe
+         en la página, así que cambia el :target sin hacer scroll. -->
+    <a class="burger burger-open" href="#primary-navigation" aria-label="Open menu" aria-controls="primary-navigation"></a>
+    <a class="burger burger-close" href="#cerrar" aria-label="Close menu"></a>
+    <a class="menu-backdrop" href="#cerrar" aria-hidden="true"></a>
   </div>
 </header>
-<main>
+<main id="main-content">
 <section class="section">
   <div class="container cols">
     <div>
@@ -88,10 +95,10 @@
       </div>
     </div>
     <div class="gallery team">
-      <figure class="wide"><img src="img/equipo1_team.jpg" alt="The full kitchen staff smiling behind the counter with fresh vegetables"></figure>
-      <figure class="span2"><img src="img/equipo2_team.jpg" alt="Front-of-house team standing in the dining room"></figure>
-      <figure><img src="img/equipo3_team.jpg" alt="Cooks working at a preparation station"></figure>
-      <figure><img src="img/equipo4_team.jpg" alt="Waiters serving guests during dinner"></figure>
+      <figure class="wide"><img src="img/equipo1_team.jpg" alt="The full kitchen staff smiling behind the counter with fresh vegetables"><figcaption>The kitchen team</figcaption></figure>
+      <figure class="span2"><img src="img/equipo2_team.jpg" alt="Front-of-house team standing in the dining room"><figcaption>Front of house</figcaption></figure>
+      <figure><img src="img/equipo3_team.jpg" alt="Cooks working at a preparation station"><figcaption>At the station</figcaption></figure>
+      <figure><img src="img/equipo4_team.jpg" alt="Waiters serving guests during dinner"><figcaption>Serving dinner</figcaption></figure>
     </div>
   </div>
 </section>

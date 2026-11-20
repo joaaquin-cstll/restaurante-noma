@@ -1,7 +1,7 @@
 .form { 
   display: grid; 
   grid-template-columns: 1fr 1fr; 
-  gap: 16px; 
+  gap: var(--gap-s); 
 }
 .form .full { 
   grid-column: 1 / -1; 
@@ -33,9 +33,6 @@
   justify-self: center; 
 }
 
-.cols img.map { 
-  aspect-ratio: 16 / 10; 
-}
 address { 
   font-style: normal; 
 }
@@ -55,7 +52,7 @@ summary {
   text-transform: uppercase; 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .form { 
     grid-template-columns: 1fr; 
   }

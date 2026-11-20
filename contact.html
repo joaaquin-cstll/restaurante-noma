@@ -13,18 +13,25 @@
 <header class="header">
   <div class="container">
     <a class="logo" href="index.html"><img src="img/logo-sin-fondo.jpg" alt="NOMA Restaurante, home"></a>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="team.html">Team</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="contact.html" aria-current="page">Contact</a></li>
+    <nav class="primary-nav" id="primary-navigation" aria-label="Primary">
+      <ul class="primary-nav__list">
+        <li><a href="index.html" class="nav-link" data-replace="Home"><span>Home</span></a></li>
+        <li><a href="team.html" class="nav-link" data-replace="Team"><span>Team</span></a></li>
+        <li><a href="menu.html" class="nav-link" data-replace="Menu"><span>Menu</span></a></li>
+        <li><a href="contact.html" class="nav-link" data-replace="Contact" aria-current="page"><span>Contact</span></a><span class="nav-line"></span></li>
       </ul>
+      <p class="primary-nav__meta">Cuisine of origin · Madrid</p>
     </nav>
     <a class="btn" href="contact.html#reserve">Reserve</a>
+    <!-- Menú hamburguesa sin JavaScript (mismo sistema que el ejercicio de diseño web):
+         "#primary-navigation" es el estado abierto (:target) y "#cerrar" no existe
+         en la página, así que cambia el :target sin hacer scroll. -->
+    <a class="burger burger-open" href="#primary-navigation" aria-label="Open menu" aria-controls="primary-navigation"></a>
+    <a class="burger burger-close" href="#cerrar" aria-label="Close menu"></a>
+    <a class="menu-backdrop" href="#cerrar" aria-hidden="true"></a>
   </div>
 </header>
-<main>
+<main id="main-content">
 <section class="section" id="reserve">
   <div class="container cols top">
     <div>
@@ -58,7 +65,7 @@
 
 <section class="section band">
   <div class="container">
-    <h2>Find us &amp; accessibility</h2>
+    <h2>Find us & accessibility</h2>
     <p>A quiet corner in central Madrid, a short walk from the metro.</p>
     <div class="cols top">
       <div>
@@ -68,9 +75,9 @@
       <div>
         <h3>Access information</h3>
         <ul class="list">
-          <li><strong>Entrance &amp; step-free access</strong><span>Step-free entrance on Calle del Olivo; 90 cm clear doorway.</span></li>
+          <li><strong>Entrance & step-free access</strong><span>Step-free entrance on Calle del Olivo; 90 cm clear doorway.</span></li>
           <li><strong>Accessible facilities</strong><span>Accessible ground-floor restroom and wheelchair-friendly seating.</span></li>
-          <li><strong>Arrival &amp; nearby transport</strong><span>Metro 5 minutes away on foot; public parking a 3-minute walk away.</span></li>
+          <li><strong>Arrival & nearby transport</strong><span>Metro 5 minutes away on foot; public parking a 3-minute walk away.</span></li>
         </ul>
       </div>
     </div>
@@ -87,7 +94,6 @@
         <a href="tel:+34910000000">+34 910 000 000</a><br>
         <a href="mailto:hola@noma-restaurante.es">hola@noma-restaurante.es</a>
       </address>
-      <p class="small">Address to be confirmed.</p>
     </div>
     <form class="form" action="#" method="post">
       <div><label for="c-name">Name</label><input type="text" id="c-name" name="name" required></div>

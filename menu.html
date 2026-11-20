@@ -13,18 +13,25 @@
 <header class="header">
   <div class="container">
     <a class="logo" href="index.html"><img src="img/logo-sin-fondo.jpg" alt="NOMA Restaurante, home"></a>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="team.html">Team</a></li>
-        <li><a href="menu.html" aria-current="page">Menu</a></li>
-        <li><a href="contact.html">Contact</a></li>
+    <nav class="primary-nav" id="primary-navigation" aria-label="Primary">
+      <ul class="primary-nav__list">
+        <li><a href="index.html" class="nav-link" data-replace="Home"><span>Home</span></a></li>
+        <li><a href="team.html" class="nav-link" data-replace="Team"><span>Team</span></a></li>
+        <li><a href="menu.html" class="nav-link" data-replace="Menu" aria-current="page"><span>Menu</span></a><span class="nav-line"></span></li>
+        <li><a href="contact.html" class="nav-link" data-replace="Contact"><span>Contact</span></a></li>
       </ul>
+      <p class="primary-nav__meta">Cuisine of origin · Madrid</p>
     </nav>
     <a class="btn" href="contact.html#reserve">Reserve</a>
+    <!-- Menú hamburguesa sin JavaScript (mismo sistema que el ejercicio de diseño web):
+         "#primary-navigation" es el estado abierto (:target) y "#cerrar" no existe
+         en la página, así que cambia el :target sin hacer scroll. -->
+    <a class="burger burger-open" href="#primary-navigation" aria-label="Open menu" aria-controls="primary-navigation"></a>
+    <a class="burger burger-close" href="#cerrar" aria-label="Close menu"></a>
+    <a class="menu-backdrop" href="#cerrar" aria-hidden="true"></a>
   </div>
 </header>
-<main>
+<main id="main-content">
 <section class="section">
   <div class="container cols">
     <div>
