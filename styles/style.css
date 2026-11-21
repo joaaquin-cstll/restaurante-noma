@@ -294,58 +294,31 @@ h3 {
   transform: translateX(-200%);
 }
 
-/* página activa con linea*/
+/*página activa muestra la línea permanente*/
 .nav-link[aria-current]::before {
-  display: none;
+  transform: scaleX(1);        /* desplegado por completo sin esperar hover */
+  transform-origin: left center;
+}
+
+/* evitar que el texto animado aparezca al hacer hover en página activa */
+.nav-link[aria-current]:hover::after {
+  transform: translateX(200%); /* mantener fuera de vista */
+}
+
+.nav-link[aria-current]:hover span {
+  transform: none;
 }
 
 .primary-nav__meta {
   display: none;
 }
 
-/*
-  La línea de la página activa usa View Transitions API: el navegador puede
-  animar el mismo elemento entre documentos si conserva el mismo nombre.
-  view-transition-name identifica esa pieza visual entre páginas.
-  Línea de la página activa: al cambiar de página se desliza a la nueva opción
-   (View Transitions API: mismo nombre en ambas páginas = transición entre posiciones) */
-.nav-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2px;
-  background: var(--accent);
-  view-transition-name: nav-line;
-}
-
-@view-transition {
-  navigation: auto;
-}
-
-::view-transition-group(nav-line) {
-  animation-duration: 0.45s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.2s;
-}
-
-/* ---------- MENÚ HAMBURGUESA (solo visible en móvil) ---------- */
-/* El botón y la capa oscura solo aparecen en tamaños de móvil */
+/* ---------- MENU HAMBURGUESA ---------- */
 .burger,
 .menu-backdrop {
   display: none;
 }
 
-/*
-  REJILLAS
-  display:grid organiza elementos en filas y columnas.
-  1fr significa una fracción del espacio disponible; dos columnas 1fr 1fr
-  reparten el ancho restante en dos partes iguales.
-*/
 .cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -360,7 +333,6 @@ h3 {
 .cols img {
   width: 100%;
   height: auto;
-  /* la foto se ve entera, con su proporción original */
 }
 
 .cards {
@@ -380,7 +352,7 @@ h3 {
 }
 
 .card-body {
-  padding: clamp(1rem, 2vw, 1.25rem); /* relleno interior de la tarjeta: de 16 px a 20 px */
+  padding: clamp(1rem, 2vw, 1.25rem);
 }
 
 .card h3 {
@@ -410,19 +382,13 @@ h3 {
   color: var(--soft);
 }
 
-/*
-  GALERÍA
-  counter-reset y counter-increment crean una numeración automática con CSS.
-  object-fit:contain muestra la imagen entera, aunque puedan quedar huecos;
-  cover llenaría el recuadro, pero podría recortar parte de la fotografía.
-  Galería: las fotos se ven COMPLETAS (object-fit: contain, sin filas de altura fija).
-   Las filas se adaptan a la proporción de cada foto. */
+/*-------- GALERÍA --------*/
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(0.5rem, 1.6vw, 1rem);       /* separación entre fotos de la galería: de 8 px a 16 px */
-  margin-top: clamp(1.25rem, 4vw, 2rem); /* espacio sobre la galería: de 20 px a 32 px */
-  counter-reset: photo;
+  gap: clamp(0.5rem, 1.6vw, 1rem);
+  margin-top: clamp(1.25rem, 4vw, 2rem);
+  
 }
 
 .gallery figure {
@@ -433,7 +399,6 @@ h3 {
   margin: 0;
   overflow: hidden;
   background: var(--surface);
-  counter-increment: photo;
 }
 
 .gallery img {
@@ -442,25 +407,7 @@ h3 {
   object-fit: contain;
 }
 
-/* número de la foto, en un círculo translúcido */
-.gallery figure::before {
-  content: "0" counter(photo);
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  background: rgba(251, 250, 247, 0.75);
-  backdrop-filter: blur(6px);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-}
-
-/* pie de foto: sube desde abajo al pasar el ratón o enfocar */
+/* pie de foto*/
 .gallery figcaption {
   position: absolute;
   right: 0;
@@ -472,6 +419,8 @@ h3 {
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+
+  /*Transición para que aparezca al pasar el ratón el pie de foto*/
   transform: translateY(101%);
   transition: transform 0.4s ease-in-out;
 }
@@ -484,11 +433,7 @@ h3 {
   grid-row: span 2;
 }
 
-/*
-  PIE DE PÁGINA
-  Las reglas anidadas dentro de .footer usan CSS nesting: son una forma
-  abreviada de escribir selectores como .footer .container o .footer p.
-*/
+/*--------- PIE DE PÁGINA ---------*/
 .footer {
   padding: 24px 0;
   border-top: 1px solid var(--line);
@@ -526,12 +471,7 @@ h3 {
   }
 }
 
-/*
-  DISEÑO RESPONSIVE
-  Las media queries aplican cambios solo cuando la ventana cumple una condición.
-  Se parte de escritorio y se reorganizan columnas y navegación en pantallas
-  más estrechas. No son páginas distintas: es el mismo HTML adaptado.
-*/
+/*------- DISEÑO RESPONSIVE --------*/
 
 /* ---------- TABLET (hasta 1024px) ---------- */
 @media (max-width: 1024px) {
@@ -539,21 +479,13 @@ h3 {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* si queda una tarjeta sola en la última fila, ocupa todo el ancho */
+  /* tarjeta sola ocupa todo el ancho */
   .cards> :last-child:nth-child(odd) {
     grid-column: 1 / -1;
   }
 }
 
-/* ---------- MENÚ HAMBURGUESA (hasta 768px) ---------- */
-/*
-  El menú móvil funciona sin JavaScript gracias a :target.
-  :target selecciona el elemento cuyo id coincide con el fragmento de la URL
-  (por ejemplo, #primary-navigation). Al pulsar el enlace hamburguesa cambia
-  ese fragmento y el menú pasa a estar visible.
-  Funciona sin JavaScript con :target, igual que el ejercicio de diseño web:
-   - #primary-navigation:target = menú abierto
-   - #cerrar (no existe) cambia el :target y lo cierra */
+/* ---------- MENU HAMBURGUESA (hasta 768px) ---------- */
 @media (max-width: 768px) {
   .header .container {
     flex-wrap: nowrap;
@@ -563,7 +495,7 @@ h3 {
     margin-left: auto;
   }
 
-  /* El nav pasa a ser un panel bajo la cabecera, cerrado por defecto */
+  /* El nav pasa a un panel bajo cabecera cerrado por defecto */
   .primary-nav {
     position: fixed;
     /* no se mueve al hacer scroll */
@@ -644,7 +576,7 @@ h3 {
       linear-gradient(var(--text), var(--text)) center 68% / 26px 2px no-repeat;
   }
 
-  /* cada pseudoelemento es una línea; se cruzan para formar la X */
+  /* cruzaremos las líneas para formar la X */
   .burger-close::before,
   .burger-close::after {
     content: "";
@@ -677,7 +609,7 @@ h3 {
     background: rgba(74, 74, 70, 0.55);
   }
 
-  /* qué aparece y qué desaparece al abrir (hermanos posteriores del nav) */
+  /* aparecer y desaparecer al abrir*/
   .primary-nav:target~.burger-open {
     display: none;
   }
