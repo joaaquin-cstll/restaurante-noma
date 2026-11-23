@@ -203,12 +203,21 @@ h3 {
 }
 
 .header .container {
+  max-width: none; /* ocupa todo el ancho del header */
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--gap-s);
   padding-top: 12px;
   padding-bottom: 12px;
+  padding-inline: clamp(1.25rem, 3.5vw, 3rem); /* separación pareja desde los extremos */
+}
+
+/* el nav ocupa todo el espacio disponible entre logo y botón */
+.header .primary-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .logo img {
@@ -226,7 +235,7 @@ h3 {
 /*NAVEGACIÓN PRINCIPAL*/
 .primary-nav__list {
   display: flex;
-  gap: clamp(1rem, 3vw, 2rem);
+  gap: clamp(1.5rem, 4vw, 3.5rem); /* mayor separación para ensanchar el nav */
 }
 
 .primary-nav__list li {
@@ -238,8 +247,8 @@ h3 {
   display: block;
   overflow: hidden;
   /* necesario para la animación de cambio de texto */
-  padding-block: 0.3rem 0.4rem;
-  font-size: clamp(0.7rem, 0.65rem + 0.2vw, 0.75rem);
+  padding-block: 0.4rem 0.5rem;
+  font-size: clamp(0.85rem, 0.78rem + 0.3vw, 1rem); /* tamaño de texto más visible y grande */
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
@@ -275,7 +284,7 @@ h3 {
   height: 100%;
   display: flex;
   align-items: center;
-  padding-block: 0.3rem 0.4rem;
+  padding-block: 0.4rem 0.5rem;
   color: var(--accent-dark);
   transform: translateX(200%);
   transition: transform 0.4s ease-in-out;
@@ -435,19 +444,23 @@ h3 {
 
 /*--------- PIE DE PÁGINA ---------*/
 .footer {
-  padding: 24px 0;
   border-top: 1px solid var(--line);
+  background: var(--bg);
 
   .container {
+    max-width: none; /* ocupa todo el ancho del footer */
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: var(--gap-s);
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-inline: clamp(1.25rem, 3.5vw, 3rem); /* misma separación exacta que el header */
   }
 
   .logo img {
-    height: 48px;
+    height: var(--logo-h); /* misma altura que el logo del header */
   }
 
   p {
@@ -473,7 +486,7 @@ h3 {
 
 /*------- DISEÑO RESPONSIVE --------*/
 
-/* ---------- TABLET (hasta 1024px) ---------- */
+/* ---------- TABLET ---------- */
 @media (max-width: 1024px) {
   .cards {
     grid-template-columns: repeat(2, 1fr);
@@ -485,7 +498,7 @@ h3 {
   }
 }
 
-/* ---------- MENU HAMBURGUESA (hasta 768px) ---------- */
+/* ---------- MENU HAMBURGUESA ---------- */
 @media (max-width: 768px) {
   .header .container {
     flex-wrap: nowrap;
@@ -567,7 +580,7 @@ h3 {
     height: 44px;
   }
 
-  /* las tres líneas */
+  /* líneas del menu burguer*/
   .burger-open {
     display: block;
     background:
@@ -624,7 +637,7 @@ h3 {
 }
 
 
-/* ---------- MÓVIL (hasta 640px) ---------- */
+/* ---------- MÓVIL ---------- */
 @media (max-width: 640px) {
 
   .cols,
