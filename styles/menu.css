@@ -4,7 +4,7 @@
   gap: var(--gap);
 }
 .tasting article {
-  padding: clamp(1.25rem, 3vw, 2rem); /* relleno de cada artículo de menú degustación: de 20 px a 32 px */
+  padding: clamp(1.25rem, 3vw, 2rem);
   background: var(--bg);
   border: 1px solid var(--accent);
 }

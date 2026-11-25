@@ -28,7 +28,7 @@
   justify-content: space-between;
   align-items: center;
   gap: var(--gap-s);
-  padding: clamp(1rem, 2vw, 1.25rem); /* relleno de la tarjeta de premio: de 16 px a 20 px */
+  padding: clamp(1rem, 2vw, 1.25rem);
   border: 1px solid var(--line);
 }
 .award h3 {
@@ -54,39 +54,90 @@
   }
 }
 
-/* ---------- EXPERIENCIAS: carrusel solo con CSS (radios + labels, como el slider) ---------- */
+/* ---------- CARRUSEL ---------- */
 .carousel {
-  --cards: 2; /* cards visibles a la vez */
-  --carousel-gap: 24px;
-  --step: calc((100% + var(--carousel-gap)) / var(--cards)); /* lo que se desplaza cada paso */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
   margin-top: clamp(1.25rem, 4vw, 2rem); /* espacio sobre el carrusel: de 20 px a 32 px */
+
+  /* ocultar botones reales */
+  input {
+    display: none;
+  }
+
+  /* flechas (todas ocultas de partida; se muestran según el estado) */
+  .arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    display: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--bg);
+    font-size: 1.1rem;
+    line-height: 44px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none; /* evita seleccionar el texto de la flecha */
+    transform: translateY(-50%);
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+  }
+
+  /* crecer flecha al pasar el ratón */
+  .arrow:hover {
+    background: var(--accent);
+    color: var(--text);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .prev { left: 0.75rem; }
+  .next { right: 0.75rem; }
+
+  /* puntos del carrusel */
+  .carousel__dots {
+    display: flex;
+    gap: 14px;
+
+    label {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--line);
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    label[for="s3"] {
+      display: none; /* en escritorio 2 posiciones en movil 3*/
+    }
+  }
 }
-/* los radios se ocultan visualmente pero siguen siendo accesibles con teclado */
-.carousel > input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
+
 .carousel__stage {
-  position: relative;
+  position: relative; /* referencia de las flechas */
   width: 100%;
 }
+
+/* ventana que recorta la cinta */
 .carousel__viewport {
+  width: 100%;
   overflow: hidden;
 }
+
+/* cinta con las 3 experiencias: en escritorio caben 2 (3 / 2 = 150%) */
 .carousel__track {
   display: flex;
-  gap: var(--carousel-gap);
+  width: 150%;
   transition: transform 0.5s ease;
 }
+
 .carousel__slide {
-  flex: 0 0 calc((100% - (var(--cards) - 1) * var(--carousel-gap)) / var(--cards));
+  width: 33.3333%; /* cada tarjeta es 1/3 de la cinta */
+  padding: 0 12px; /* separación de 24px entre tarjetas */
 }
 
 /* Card de experiencia: foto completa y texto que se despliega al pasar el ratón */
@@ -138,85 +189,43 @@
   }
 }
 
-/* Control del slider: selectores planos, sin anidar */
+/* ------------ Controlar el Slider --------------- */
+/* Cada posición desplaza la cinta un 33.3333% (1 tarjeta de 3) */
 #s1:checked ~ .carousel__stage .carousel__track {
   transform: translateX(0);
 }
 #s2:checked ~ .carousel__stage .carousel__track,
 #s3:checked ~ .carousel__stage .carousel__track {
-  transform: translateX(calc(-1 * var(--step)));
+  transform: translateX(-33.3333%);
 }
 
-/* Flechas (todas ocultas de partida; se muestran según el estado) */
-.arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 3;
-  display: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--text);
-  color: var(--bg);
-  font-size: 1.1rem;
-  line-height: 44px;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-  transform: translateY(-50%);
-  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
-}
-.arrow:hover {
-  background: var(--accent);
-  color: var(--text);
-  transform: translateY(-50%) scale(1.1);
-}
-.prev {
-  left: 0.75rem;
-}
-.next {
-  right: 0.75rem;
-}
-#s1:checked ~ .carousel__stage .n1,
-#s2:checked ~ .carousel__stage .p2 {
-  display: block;
-}
-
-/* Puntos */
-.carousel__dots {
-  display: flex;
-  gap: 14px;
-}
-.carousel__dots label {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--line);
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-.carousel__dots label[for="s3"] {
-  display: none; /* en escritorio solo hay 2 posiciones */
-}
+/* Punto activo: cambia a color acento oscuro y crece un poco */
 #s1:checked ~ .carousel__dots label[for="s1"],
 #s2:checked ~ .carousel__dots label[for="s2"],
 #s3:checked ~ .carousel__dots label[for="s3"] {
   background: var(--accent-dark);
   transform: scale(1.2);
 }
-/* Móvil: una card cada vez, tres posiciones */
+
+/* Primera posición: solo flecha derecha; segunda: solo izquierda */
+#s1:checked ~ .carousel__stage .n1,
+#s2:checked ~ .carousel__stage .p2 {
+  display: block;
+}
+
+/* Móvil: una card cada vez (3 / 1 = 300%), tres posiciones */
 @media (max-width: 640px) {
-  .carousel {
-    --cards: 1;
+  .carousel__track {
+    width: 300%;
   }
   #s3:checked ~ .carousel__stage .carousel__track {
-    transform: translateX(calc(-2 * var(--step)));
+    transform: translateX(-66.6666%);
   }
   #s2:checked ~ .carousel__stage .n2,
   #s3:checked ~ .carousel__stage .p3 {
     display: block;
   }
-  .carousel__dots label[for="s3"] {
+  .carousel .carousel__dots label[for="s3"] {
     display: block;
   }
 }

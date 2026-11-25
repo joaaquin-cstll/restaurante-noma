@@ -40,16 +40,66 @@ address {
 details { 
   padding: 16px 0; 
   border-bottom: 1px solid var(--line); 
+  interpolate-size: allow-keywords; /* permite animar la altura hasta auto */
 
   p { 
-  margin: 12px 0 0; 
+    margin: 12px 0 0; 
+    color: var(--soft);
   }
 }
+
+/* transición suave al abrir y cerrar el contenido del details */
+details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: block-size 0.35s ease, opacity 0.35s ease, content-visibility 0.35s allow-discrete;
+}
+
+details[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+
 summary { 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  list-style: none; /* quita el triángulo por defecto */
   cursor: pointer; 
   font-size: .75rem; 
   letter-spacing: .2em; 
-  text-transform: uppercase; 
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+/*asegurar quitar el triángulo en ciertos navegadores*/
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::after {
+  content: "+";
+  font-size: 1.3rem;
+  font-weight: 450;
+  line-height: 1;
+  color: var(--accent);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+summary:hover::after {
+  color: var(--accent-dark);
+  transform: scale(1.4);
+}
+
+/* al abrirse pasar a x */
+details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+details[open] summary:hover::after {
+  transform: rotate(45deg) scale(1.2);
 }
 
 @media (max-width: 640px) {

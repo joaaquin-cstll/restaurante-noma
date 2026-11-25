@@ -86,7 +86,7 @@ h3 {
 
 /*
   en .container centrar el contenido y limitar su anchura máxima.
-  en .section aplica el mismo espacio vertical a las secciones de todas las páginas.
+  en .section aplicar el mismo espacio vertical a las secciones de todas las páginas.
 */
 .container {
   max-width: 1100px;
